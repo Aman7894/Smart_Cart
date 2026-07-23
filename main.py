@@ -10,6 +10,7 @@ Run:
 Then POST to /predict-segment with a JSON body matching CustomerInput.
 """
 
+import os
 import subprocess
 import sys
 import joblib
@@ -51,11 +52,20 @@ def ensure_model_artifacts() -> None:
 
 
 # allow your React/Vite dev server to call this - tighten origins for prod
+allowed_origins = [
+    origin.strip()
+    for origin in os.getenv(
+        "CORS_ORIGINS",
+        "https://smart-cart-three-beta.vercel.app,http://localhost:5173,http://127.0.0.1:5173",
+    ).split(",")
+    if origin.strip()
+]
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=allowed_origins,
     allow_methods=["*"],
     allow_headers=["*"],
+    allow_credentials=True,
 )
 
 # ----------------------------------------------------------------------
