@@ -11,6 +11,7 @@ Then POST to /predict-segment with a JSON body matching CustomerInput.
 """
 
 import joblib
+from pathlib import Path
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -19,6 +20,8 @@ from preprocessing import build_model_input
 from persona_map import PERSONA_MAP
 
 app = FastAPI(title="SmartCart Segmentation API")
+BASE_DIR = Path(__file__).resolve().parent
+ARTIFACTS_DIR = BASE_DIR / "artifacts"
 
 # allow your React/Vite dev server to call this - tighten origins for prod
 app.add_middleware(
@@ -32,12 +35,12 @@ app.add_middleware(
 # Load everything ONCE at startup, not per-request
 # ----------------------------------------------------------------------
 try:
-    ohe = joblib.load("artifacts/ohe.pkl")
-    scaler = joblib.load("artifacts/scaler.pkl")
-    pca = joblib.load("artifacts/pca.pkl")
-    kmeans = joblib.load("artifacts/kmeans.pkl")
-    feature_columns = joblib.load("artifacts/feature_columns.pkl")
-    reference_date = joblib.load("artifacts/reference_date.pkl")
+    ohe = joblib.load(ARTIFACTS_DIR / "ohe.pkl")
+    scaler = joblib.load(ARTIFACTS_DIR / "scaler.pkl")
+    pca = joblib.load(ARTIFACTS_DIR / "pca.pkl")
+    kmeans = joblib.load(ARTIFACTS_DIR / "kmeans.pkl")
+    feature_columns = joblib.load(ARTIFACTS_DIR / "feature_columns.pkl")
+    reference_date = joblib.load(ARTIFACTS_DIR / "reference_date.pkl")
 except FileNotFoundError:
     raise RuntimeError(
         "Model artifacts not found. Run train_and_save.py first to "
