@@ -1,56 +1,39 @@
-# 🛒 Smart Cart
+# 🛒 SmartCart – Customer Segmentation using Machine Learning
 
-A modern full-stack Smart Cart application that provides users with a seamless online shopping experience. The project focuses on intuitive UI, secure authentication, efficient cart management, and responsive design to simplify the e-commerce experience.
+SmartCart is a Machine Learning application that predicts customer segments based on demographic information, purchasing behavior, and spending habits. The application helps businesses identify different customer personas, enabling targeted marketing strategies and better customer engagement.
 
-![License](https://img.shields.io/badge/License-MIT-blue.svg)
-![Status](https://img.shields.io/badge/Status-Active-success)
-![Made With](https://img.shields.io/badge/Made%20With-MERN-green)
+The project integrates a trained ML model with a clean and interactive frontend for real-time customer segment prediction.
 
 ---
 
-## 📖 Overview
+## 🚀 Features
 
-Smart Cart is a feature-rich shopping application built using modern web technologies. It enables users to browse products, manage their shopping cart, authenticate securely, and enjoy a smooth purchasing workflow.
-
-The project demonstrates full-stack development concepts including frontend design, backend APIs, database management, and user authentication.
-
----
-
-## ✨ Features
-
-- 🔐 User Authentication & Authorization
-- 🛍️ Browse Products
-- 🔎 Search & Filter Products
-- 🛒 Add/Remove Items from Cart
-- ➕ Update Product Quantity
-- ❤️ Responsive User Interface
-- 📱 Mobile Friendly Design
-- ⚡ Fast Performance
-- 💾 Database Integration
-- 🔒 Secure Backend APIs
+- 🤖 Machine Learning-based customer segmentation
+- 📊 Predict customer persona instantly
+- 👤 Analyze demographic information
+- 💰 Evaluate customer spending behavior
+- 🛍 Analyze purchase history
+- ⚡ Real-time predictions
+- 🎨 Modern and responsive user interface
 
 ---
 
-## 🛠️ Tech Stack
+## 🧠 Technologies Used
+
+### Machine Learning
+- Python
+- Scikit-learn
+- Pandas
+- NumPy
+- Joblib
 
 ### Frontend
-- React.js
-- HTML5
-- CSS3
-- JavaScript (ES6+)
+- HTML
+- CSS
+- JavaScript
 
-### Backend
-- Node.js
-- Express.js
-
-### Database
-- MongoDB
-- Mongoose
-
-### Tools
-- Git
-- GitHub
-- VS Code
+### Deployment
+- Render
 
 ---
 
@@ -59,148 +42,144 @@ The project demonstrates full-stack development concepts including frontend desi
 ```
 Smart_Cart/
 │
-├── frontend/
-│   ├── public/
-│   ├── src/
-│   └── package.json
+├── artifacts/                 # Saved ML model and preprocessing files
+├── frontend/                  # Frontend source code
 │
-├── backend/
-│   ├── controllers/
-│   ├── routes/
-│   ├── models/
-│   ├── middleware/
-│   └── server.js
+├── preprocessing.py           # Data preprocessing
+├── persona_map.py             # Maps cluster IDs to customer personas
+├── main.py                    # Main application
 │
-├── README.md
-└── package.json
+├── smartcart_customers.csv    # Dataset
+├── requirements.txt           # Python dependencies
+├── render.yaml                # Render deployment configuration
+├── package-lock.json
+├── .gitignore
+└── README.md
 ```
 
 ---
 
-## 🚀 Installation
+## 📊 Input Parameters
 
-### Clone the Repository
+The model predicts customer segments using:
+
+- Year of Birth
+- Education Level
+- Marital Status
+- Annual Income
+- Number of Kids at Home
+- Number of Teens at Home
+- Customer Join Date
+- Days Since Last Purchase
+- Purchases with Discount
+- Web Purchases
+- Catalog Purchases
+- Store Purchases
+- Website Visits per Month
+- Spending on:
+  - Wine
+  - Fruits
+  - Meat Products
+  - Fish Products
+  - Sweet Products
+  - Gold Products
+
+---
+
+## 🎯 Output
+
+The model classifies customers into meaningful personas such as:
+
+- High-Income Low-Engagement
+- Premium Customers
+- Budget-Conscious Buyers
+- Frequent Online Shoppers
+- Loyal Customers
+
+*(The exact personas depend on the trained clustering model.)*
+
+---
+
+## ⚙️ Installation
+
+Clone the repository
 
 ```bash
 git clone https://github.com/Aman7894/Smart_Cart.git
 ```
 
-### Navigate into the project
+Move into the project directory
 
 ```bash
 cd Smart_Cart
 ```
 
-### Install dependencies
-
-Backend
+Install dependencies
 
 ```bash
-npm install
+pip install -r requirements.txt
 ```
 
-Frontend
+Run the application
 
 ```bash
-cd frontend
-npm install
+python main.py
 ```
 
 ---
 
-## ▶️ Run the Project
+## 🌐 Deployment
 
-### Start Backend
+The project is configured for deployment on **Render** using the included `render.yaml` configuration.
 
-```bash
-npm start
-```
+---
 
-### Start Frontend
-
-```bash
-cd frontend
-npm start
-```
-
-The application will start on:
+## 📈 Machine Learning Pipeline
 
 ```
-Frontend : http://localhost:3000
-
-Backend : http://localhost:5000
+Customer Dataset
+        │
+        ▼
+Data Preprocessing
+        │
+        ▼
+Feature Engineering
+        │
+        ▼
+Model Training
+        │
+        ▼
+Customer Segmentation
+        │
+        ▼
+Persona Mapping
+        │
+        ▼
+Frontend Prediction
 ```
 
 ---
 
-## ⚙️ Environment Variables
+## 💼 Applications
 
-Create a `.env` file inside the backend directory.
-
-```env
-PORT=5000
-
-MONGO_URI=your_mongodb_connection_string
-
-JWT_SECRET=your_secret_key
-```
+- Customer Segmentation
+- Marketing Campaign Optimization
+- Personalized Recommendations
+- Customer Analytics
+- Business Intelligence
+- Customer Retention Strategies
 
 ---
 
-## 📸 Screenshots
+## 🔮 Future Enhancements
 
-> Add screenshots here.
-
-Example:
-
-```
-screenshots/
-│
-├── home.png
-├── login.png
-├── products.png
-├── cart.png
-```
-
----
-
-## 🎯 Future Improvements
-
-- Payment Gateway Integration
-- Wishlist
-- Product Reviews
-- Order Tracking
-- Admin Dashboard
-- Inventory Management
-- Email Notifications
-- Dark Mode
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome!
-
-1. Fork the repository
-2. Create a new branch
-
-```bash
-git checkout -b feature-name
-```
-
-3. Commit changes
-
-```bash
-git commit -m "Added new feature"
-```
-
-4. Push to branch
-
-```bash
-git push origin feature-name
-```
-
-5. Open a Pull Request
+- Authentication System
+- Database Integration
+- Analytics Dashboard
+- Interactive Charts
+- REST API
+- Model Retraining Pipeline
+- Cloud Storage Integration
 
 ---
 
@@ -212,11 +191,9 @@ git push origin feature-name
 
 ---
 
-## ⭐ Support
+## ⭐ If you like this project
 
-If you found this project useful, don't forget to **Star ⭐ the repository**.
-
-It motivates me to build more awesome projects!
+Give it a ⭐ on GitHub!
 
 ---
 
