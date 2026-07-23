@@ -13,6 +13,8 @@ this was reconstructed from your notebook cells, not the raw CSV,
 so column names should match but are worth a 10-second sanity check.
 """
 
+from pathlib import Path
+
 import pandas as pd
 import joblib
 
@@ -21,10 +23,14 @@ from sklearn.decomposition import PCA
 from sklearn.cluster import KMeans, AgglomerativeClustering
 from sklearn.metrics import silhouette_score
 
+BASE_DIR = Path(__file__).resolve().parent
+ARTIFACTS_DIR = BASE_DIR / "artifacts"
+ARTIFACTS_DIR.mkdir(parents=True, exist_ok=True)
+
 # ----------------------------------------------------------------------
 # 1. Load + clean (same as cells 1-23 in your notebook)
 # ----------------------------------------------------------------------
-df = pd.read_csv("smartcart_customers.csv")
+df = pd.read_csv(BASE_DIR / "smartcart_customers.csv")
 df["Income"] = df["Income"].fillna(df["Income"].median())
 
 df["Age"] = 2026 - df["Year_Birth"]
@@ -116,12 +122,12 @@ print(cluster_summary)
 # ----------------------------------------------------------------------
 # 6. Save everything the API needs
 # ----------------------------------------------------------------------
-joblib.dump(ohe, "artifacts/ohe.pkl")
-joblib.dump(scaler, "artifacts/scaler.pkl")
-joblib.dump(pca, "artifacts/pca.pkl")
-joblib.dump(kmeans, "artifacts/kmeans.pkl")
-joblib.dump(FEATURE_COLUMNS, "artifacts/feature_columns.pkl")
-joblib.dump(REFERENCE_DATE, "artifacts/reference_date.pkl")
-cluster_summary.to_csv("artifacts/cluster_summary.csv")
+joblib.dump(ohe, ARTIFACTS_DIR / "ohe.pkl")
+joblib.dump(scaler, ARTIFACTS_DIR / "scaler.pkl")
+joblib.dump(pca, ARTIFACTS_DIR / "pca.pkl")
+joblib.dump(kmeans, ARTIFACTS_DIR / "kmeans.pkl")
+joblib.dump(FEATURE_COLUMNS, ARTIFACTS_DIR / "feature_columns.pkl")
+joblib.dump(REFERENCE_DATE, ARTIFACTS_DIR / "reference_date.pkl")
+cluster_summary.to_csv(ARTIFACTS_DIR / "cluster_summary.csv")
 
 print("\nSaved all artifacts to ./artifacts/")

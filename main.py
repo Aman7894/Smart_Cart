@@ -10,6 +10,8 @@ Run:
 Then POST to /predict-segment with a JSON body matching CustomerInput.
 """
 
+import subprocess
+import sys
 import joblib
 from pathlib import Path
 from fastapi import FastAPI, HTTPException
@@ -23,6 +25,31 @@ app = FastAPI(title="SmartCart Segmentation API")
 BASE_DIR = Path(__file__).resolve().parent
 ARTIFACTS_DIR = BASE_DIR / "artifacts"
 
+
+def ensure_model_artifacts() -> None:
+    required_files = [
+        ARTIFACTS_DIR / "ohe.pkl",
+        ARTIFACTS_DIR / "scaler.pkl",
+        ARTIFACTS_DIR / "pca.pkl",
+        ARTIFACTS_DIR / "kmeans.pkl",
+        ARTIFACTS_DIR / "feature_columns.pkl",
+        ARTIFACTS_DIR / "reference_date.pkl",
+    ]
+
+    if all(path.exists() for path in required_files):
+        return
+
+    ARTIFACTS_DIR.mkdir(parents=True, exist_ok=True)
+    subprocess.run(
+        [sys.executable, str(BASE_DIR / "train_and_save.py")],
+        cwd=BASE_DIR,
+        check=True,
+    )
+
+    if not all(path.exists() for path in required_files):
+        raise RuntimeError("Model artifacts could not be generated after training.")
+
+
 # allow your React/Vite dev server to call this - tighten origins for prod
 app.add_middleware(
     CORSMiddleware,
@@ -35,6 +62,7 @@ app.add_middleware(
 # Load everything ONCE at startup, not per-request
 # ----------------------------------------------------------------------
 try:
+    ensure_model_artifacts()
     ohe = joblib.load(ARTIFACTS_DIR / "ohe.pkl")
     scaler = joblib.load(ARTIFACTS_DIR / "scaler.pkl")
     pca = joblib.load(ARTIFACTS_DIR / "pca.pkl")
